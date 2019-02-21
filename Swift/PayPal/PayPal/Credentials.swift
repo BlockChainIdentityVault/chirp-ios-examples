@@ -11,9 +11,9 @@
 
 #error("Add your credentials below (from https://developers.chirp.io) and delete this line.")
 
-let APP_KEY: String = "YOUR_APP_KEY"
-let APP_SECRET: String = "YOUR_APP_SECRET"
-let APP_CONFIG: String = "YOUR_APP_CONFIG"
+let CHIRP_APP_KEY: String = "YOUR_APP_KEY"
+let CHIRP_APP_SECRET: String = "YOUR_APP_SECRET"
+let CHIRP_APP_CONFIG: String = "YOUR_APP_CONFIG"
 
 
 #error("Add your credentials below (from https://developer.paypal.com/developer/accounts/) and delete this line.")

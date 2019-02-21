@@ -17,13 +17,13 @@ protocol ChirpDelegate {
 class ChirpService {
     var delegate: ChirpDelegate?
     var sdk: ChirpConnect?
-    
+
     public init() {
-        sdk = ChirpConnect(appKey: APP_KEY, andSecret: APP_SECRET)
+        sdk = ChirpConnect(appKey: CHIRP_APP_KEY, andSecret: CHIRP_APP_SECRET)
         if let sdk = sdk {
-            sdk.setConfig(APP_CONFIG)
+            sdk.setConfig(CHIRP_APP_CONFIG)
             sdk.start()
-            
+
             sdk.receivedBlock = {
                 (data: Data?, channel: UInt?) -> () in
                 if let delegate = self.delegate {
@@ -31,7 +31,7 @@ class ChirpService {
                 }
                 return;
             }
-            
+
             sdk.sentBlock = {
                 (data: Data?, channel: UInt?) -> () in
                 if let delegate = self.delegate {
@@ -41,7 +41,7 @@ class ChirpService {
             }
         }
     }
-    
+
     func send(payload: Data) {
         if let sdk = sdk {
             sdk.send(payload)

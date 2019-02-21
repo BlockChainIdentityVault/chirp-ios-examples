@@ -19,17 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var sdk: ChirpConnect?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        sdk = ChirpConnect(appKey: APP_KEY, andSecret: APP_SECRET)
+
+        sdk = ChirpConnect(appKey: CHIRP_APP_KEY, andSecret: CHIRP_APP_SECRET)
         if let sdk = sdk {
-            if let error = sdk.setConfig(APP_CONFIG) {
+            if let error = sdk.setConfig(CHIRP_APP_CONFIG) {
                 print(error.localizedDescription)
             }
             if let error = sdk.start() {
                 print(error.localizedDescription)
             }
         }
-        
+
         return true
     }
 
