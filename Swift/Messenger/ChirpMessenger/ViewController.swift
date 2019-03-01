@@ -92,6 +92,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         self.sendButton.isEnabled = true
         self.sendButton.setTitle("SEND", for: .normal)
         self.sendButton.backgroundColor = self.chirpBlue
+        self.receivedText.text = "Received message"
     }
 
     /*
