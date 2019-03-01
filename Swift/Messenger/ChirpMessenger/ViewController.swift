@@ -14,13 +14,13 @@ import AVFoundation
 
 
 class ViewController: UIViewController, UITextViewDelegate {
-    
+
     let chirpGrey: UIColor = UIColor(red: 84.0 / 255.0, green: 84.0 / 255.0, blue: 84.0 / 255.0, alpha: 1.0)
     let chirpBlue: UIColor = UIColor(red: 43.0 / 255.0, green: 74.0 / 255.0, blue: 201.0 / 255.0, alpha: 1.0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Listen for app going to the background
         NotificationCenter.default.addObserver(
             self,
@@ -35,40 +35,32 @@ class ViewController: UIViewController, UITextViewDelegate {
 
         // Set up some colours for buttons
         self.sendButton.setTitleColor(UIColor.white, for: .disabled)
-        
+
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if let sdk = appDelegate.sdk {
 
             sdk.sendingBlock = {
                 (data : Data?, channel: UInt?) -> () in
-                self.sendButton.isEnabled = false
-                self.sendButton.setTitle("SENDING", for: .normal)
-                self.sendButton.backgroundColor = self.chirpGrey
+                self.configureSendButton(enabled: false, title: "SENDING", colour: self.chirpGrey)
                 return;
             }
 
             sdk.sentBlock = {
                 (data : Data?, channel: UInt?) -> () in
-                self.sendButton.isEnabled = true
-                self.sendButton.setTitle("SEND", for: .normal)
-                self.sendButton.backgroundColor = self.chirpBlue
+                self.configureSendButton(enabled: true, title: "SEND", colour: self.chirpBlue)
                 return;
             }
 
             sdk.receivingBlock = {
                 (channel: UInt?) -> () in
-                self.sendButton.isEnabled = false
-                self.sendButton.setTitle("RECEIVING", for: .normal)
-                self.sendButton.backgroundColor = self.chirpGrey
+                self.configureSendButton(enabled: false, title: "RECEIVING", colour: self.chirpGrey)
                 self.receivedText.text = "...."
                 return;
             }
 
             sdk.receivedBlock = {
                 (data : Data?, channel: UInt?) -> () in
-                self.sendButton.isEnabled = true
-                self.sendButton.setTitle("SEND", for: .normal)
-                self.sendButton.backgroundColor = self.chirpBlue
+                self.configureSendButton(enabled: true, title: "SEND", colour: self.chirpBlue)
                 if let data = data {
                     if let payload = String(data: data, encoding: .utf8) {
                         self.receivedText.text = payload
@@ -83,16 +75,23 @@ class ViewController: UIViewController, UITextViewDelegate {
             }
         }
     }
-    
+
     /*
      * Ensure buttons are not left disabled when
      * returning from the background.
      */
     @objc func appMovedToBackground() {
-        self.sendButton.isEnabled = true
-        self.sendButton.setTitle("SEND", for: .normal)
-        self.sendButton.backgroundColor = self.chirpBlue
+        self.configureSendButton(enabled: true, title: "SEND", colour: self.chirpBlue)
         self.receivedText.text = "Received message"
+    }
+
+    /*
+     * Configure the send buttons properties
+     */
+    func configureSendButton(enabled: Bool, title: String, colour: UIColor) {
+        self.sendButton.isEnabled = enabled
+        self.sendButton.setTitle(title, for: .normal)
+        self.sendButton.backgroundColor = colour
     }
 
     /*
@@ -124,7 +123,7 @@ class ViewController: UIViewController, UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.inputText.text = ""
     }
-    
+
     @IBAction func send(_ sender: Any) {
         self.sendInput()
     }
