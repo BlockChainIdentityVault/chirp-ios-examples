@@ -41,6 +41,17 @@ For this tutorial you will also need to
 
 ----
 
+### Chirp SecureMessenger
+
+Chirp Secure Messenger is an extension of the Chirp Messenger app, adding in AES encryption
+to illustrate the simplicity of encrypting data using Chirp.
+
+Compatible with the Android SecureMessenger at [chirp-android-examples](https://github.com/chirp/chirp-android-examples)
+
+![MessengerGIF](/Assets/Messenger.gif)
+
+----
+
 ## Objective-C
 
 ### Chirp + TOTP
