@@ -88,7 +88,6 @@
 				61940AAA497AF7A770AF5C1D /* Pods-SecureMessenger.debug.xcconfig */,
 				B58323FBBCE8AE0C44C6087D /* Pods-SecureMessenger.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -362,7 +361,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YCBL7X58WF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SecureMessenger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -382,7 +381,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YCBL7X58WF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SecureMessenger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
