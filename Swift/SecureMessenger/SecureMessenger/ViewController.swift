@@ -66,21 +66,10 @@ class ViewController: UIViewController, UITextViewDelegate {
                 self.sendButton.backgroundColor = chirpBlue
                 if let data = data {
                     
-                    var dataPayload = data
-                    do {
-                        let date : Date = Date()
-                        let hour = Calendar.current.component(.hour, from: date)
-                        let minute = Calendar.current.component(.minute, from: date)
-                        var preHash = Array<UInt8>()
-                        preHash += self.key
-                        preHash.append(UInt8(hour))
-                        preHash.append(UInt8(minute))
-                        let hash = preHash.sha256()
-                        let iv : Array<UInt8> = Array<UInt8>(hash[0...15])
-                        dataPayload = Data(try! AES(key: self.key, blockMode: CTR(iv: iv), padding: .noPadding).decrypt(data.bytes))
-                    }
+                    let iv: Array<UInt8> = self.generateIv()
+                    let decrypted = Data(try! AES(key: self.key, blockMode: CTR(iv: iv), padding: .noPadding).decrypt(data.bytes))
                     
-                    if let payload = String(data: dataPayload, encoding: .ascii) {
+                    if let payload = String(data: decrypted, encoding: .ascii) {
                         self.receivedText.text = payload
                         print(String(format: "Received: %@", payload))
                     } else {
@@ -92,6 +81,23 @@ class ViewController: UIViewController, UITextViewDelegate {
                 return;
             }
         }
+    }
+    
+    /*
+     * Generate a simple initialisation vector by hashing
+     * the key and the current timestamp.
+     */
+    func generateIv() -> Array<UInt8> {
+        let date: Date = Date()
+        let hour = Calendar.current.component(.hour, from: date)
+        let minute = Calendar.current.component(.minute, from: date)
+        var preHash = Array<UInt8>()
+        preHash += self.key
+        preHash.append(UInt8(hour))
+        preHash.append(UInt8(minute))
+        let hash = preHash.sha256()
+        let iv: Array<UInt8> = Array<UInt8>(hash[0...15])
+        return iv
     }
     
     /*
@@ -109,7 +115,9 @@ class ViewController: UIViewController, UITextViewDelegate {
             if let sdk = appDelegate.sdk {
                 let data = self.inputText.text.data(using: .utf8)
                 if let data = data {
-                    if let error = sdk.send(data) {
+                    let iv: Array<UInt8> = self.generateIv()
+                    let encrypted = Data(try! AES(key: self.key, blockMode: CTR(iv: iv), padding: .noPadding).encrypt(data.bytes))
+                    if let error = sdk.send(encrypted) {
                         print(error.localizedDescription)
                     }
                 }
