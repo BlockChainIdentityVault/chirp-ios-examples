@@ -1,10 +1,13 @@
-//
-//  ViewController.h
-//  chirpTOTP
-//
-//  Created by Amogh Matt on 08/06/2018.
-//  Copyright © 2018 Chirp. All rights reserved.
-//
+/*------------------------------------------------------------------------------
+ *
+ *  ViewController.h
+ *
+ *  For full information on usage and licensing, see https://chirp.io/
+ *
+ *  Copyright © 2011-2019, Asio Ltd.
+ *  All rights reserved.
+ *
+ *----------------------------------------------------------------------------*/
 
 #import <UIKit/UIKit.h>
 

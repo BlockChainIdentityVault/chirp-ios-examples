@@ -1,17 +1,21 @@
-//
-//  AppDelegate.h
-//  TOTPClient
-//
-//  Created by Joe Todd on 13/02/2019.
-//  Copyright © 2019 Chirp. All rights reserved.
-//
+/*------------------------------------------------------------------------------
+ *
+ *  AppDelegate.h
+ *
+ *  For full information on usage and licensing, see https://chirp.io/
+ *
+ *  Copyright © 2011-2019, Asio Ltd.
+ *  All rights reserved.
+ *
+ *----------------------------------------------------------------------------*/
 
 #import <UIKit/UIKit.h>
+#import <ChirpConnect/ChirpConnect.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) ChirpConnect *connect;
 
 @end
 
