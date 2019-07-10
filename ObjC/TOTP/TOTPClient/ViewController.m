@@ -91,11 +91,6 @@
 {
     NSString *string = [NSString stringWithUTF8String:message.UTF8String];
     ChirpConnect *connect = ((AppDelegate *)[UIApplication sharedApplication].delegate).connect;
-    
-    if ([string lengthOfBytesUsingEncoding:NSUTF8StringEncoding] >
-        [connect maxPayloadLength]) {
-        return nil;
-    }
 
     NSData *stringData = [string dataUsingEncoding:NSUTF8StringEncoding];
     return [connect isValidPayload:stringData] ? stringData : nil;
