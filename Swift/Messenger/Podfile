@@ -6,5 +6,5 @@ target 'ChirpMessenger' do
   use_frameworks!
 
   # Pods for ChirpMessenger
-  pod 'ChirpSDK', '3.5.1'
+  pod 'ChirpSDK', '3.5.2'
 end
