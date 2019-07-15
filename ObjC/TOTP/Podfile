@@ -6,5 +6,5 @@ target 'TOTPClient' do
   use_frameworks!
 
   # Pods for TOTPClient
-  pod 'ChirpSDK', '3.5.1'
+  pod 'ChirpSDK', '3.5.2'
 end
