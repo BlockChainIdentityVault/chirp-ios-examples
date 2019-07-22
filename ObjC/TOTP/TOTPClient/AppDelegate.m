@@ -1,12 +1,16 @@
-//
-//  AppDelegate.m
-//  TOTPClient
-//
-//  Created by Joe Todd on 13/02/2019.
-//  Copyright © 2019 Chirp. All rights reserved.
-//
+/*------------------------------------------------------------------------------
+ *
+ *  AppDelegate.m
+ *
+ *  For full information on usage and licensing, see https://chirp.io/
+ *
+ *  Copyright © 2011-2019, Asio Ltd.
+ *  All rights reserved.
+ *
+ *----------------------------------------------------------------------------*/
 
 #import "AppDelegate.h"
+#import "Credentials.h"
 
 @interface AppDelegate ()
 
@@ -16,35 +20,81 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    self.connect = [[ChirpConnect alloc] initWithAppKey:CHIRP_APP_KEY andSecret:CHIRP_APP_SECRET];
+    NSError *err = [self.connect setConfig:CHIRP_APP_CONFIG];
+    if (!err) {
+        err = [self.connect start];
+        if (err) {
+            NSLog(@"ChirpError (%@)", err.description);
+        } else {
+            NSLog(@"Started ChirpSDK");
+        }
+    } else {
+        NSLog(@"ChirpError (%@)", err.description);
+    }
+    
     return YES;
 }
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    if (self.connect) {
+        if (self.connect.state != CHIRP_CONNECT_STATE_STOPPED) {
+            NSError *err = [self.connect stop];
+            if (err) {
+                NSLog(@"ChirpError (%@)", err.description);
+            }
+        }
+    }
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    if (self.connect) {
+        if (self.connect.state != CHIRP_CONNECT_STATE_STOPPED) {
+            NSError *err = [self.connect stop];
+            if (err) {
+                NSLog(@"ChirpError (%@)", err.description);
+            }
+        }
+    }
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    if (self.connect) {
+        if (self.connect.state == CHIRP_CONNECT_STATE_STOPPED) {
+            NSError *err = [self.connect start];
+            if (err) {
+                NSLog(@"ChirpError (%@)", err.description);
+            }
+        }
+    }
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if (self.connect) {
+        if (self.connect.state == CHIRP_CONNECT_STATE_STOPPED) {
+            NSError *err = [self.connect start];
+            if (err) {
+                NSLog(@"ChirpError (%@)", err.description);
+            }
+        }
+    }
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    if (self.connect) {
+        if (self.connect.state != CHIRP_CONNECT_STATE_STOPPED) {
+            NSError *err = [self.connect stop];
+            if (err) {
+                NSLog(@"ChirpError (%@)", err.description);
+            }
+        }
+    }
 }
 
 

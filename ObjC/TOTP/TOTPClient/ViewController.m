@@ -1,11 +1,15 @@
-//
-//  ViewController.m
-//  chirpTOTP
-//
-//  Created by Amogh Matt on 08/06/2018.
-//  Copyright © 2018 Chirp. All rights reserved.
-//
+/*------------------------------------------------------------------------------
+ *
+ *  ViewController.m
+ *
+ *  For full information on usage and licensing, see https://chirp.io/
+ *
+ *  Copyright © 2011-2019, Asio Ltd.
+ *  All rights reserved.
+ *
+ *----------------------------------------------------------------------------*/
 
+#import "AppDelegate.h"
 #import "ViewController.h"
 #import <ChirpConnect/ChirpConnect.h>
 #import "Classes/TOTPGenerator.h"
@@ -13,13 +17,11 @@
 #import "Credentials.h"
 
 @interface ViewController ()
-@property (nonatomic, strong) ChirpConnect *connect;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
-    // Do any additional setup after loading the view, typically from a nib.
 
     [super viewDidLoad];
 
@@ -34,10 +36,6 @@
     [self updateUI];
 
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateUI) userInfo:nil repeats:YES];
-
-    self.connect = [[ChirpConnect alloc] initWithAppKey:CHIRP_APP_KEY andSecret:CHIRP_APP_SECRET];
-    [self.connect setConfig:CHIRP_APP_CONFIG];
-    [self.connect start];
 }
 
 - (IBAction)sendButtonPressed:(id)sender
@@ -45,12 +43,12 @@
     NSString *chirpPIN = self.PINLabel.text;
     NSData *data = [self encodeMessage:chirpPIN];
 
-    [self.connect send:data];
+    ChirpConnect *connect = ((AppDelegate *)[UIApplication sharedApplication].delegate).connect;
+    [connect send:data];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)updateUI
@@ -92,13 +90,10 @@
 -(NSData *) encodeMessage:(NSString *)message
 {
     NSString *string = [NSString stringWithUTF8String:message.UTF8String];
-    if ([string lengthOfBytesUsingEncoding:NSUTF8StringEncoding] >
-        [self.connect maxPayloadLength]) {
-        return nil;
-    }
+    ChirpConnect *connect = ((AppDelegate *)[UIApplication sharedApplication].delegate).connect;
 
     NSData *stringData = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [self.connect isValidPayload:stringData] ? stringData : nil;
+    return [connect isValidPayload:stringData] ? stringData : nil;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
