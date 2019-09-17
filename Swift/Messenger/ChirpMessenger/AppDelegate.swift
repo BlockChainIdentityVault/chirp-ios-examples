@@ -4,7 +4,7 @@
  *
  *  For full information on usage and licensing, see https://chirp.io/
  *
- *  Copyright © 2011-2018, Asio Ltd.
+ *  Copyright © 2011-2019, Asio Ltd.
  *  All rights reserved.
  *
  *----------------------------------------------------------------------------*/
@@ -16,11 +16,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var sdk: ChirpConnect?
+    var sdk: ChirpSDK?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        sdk = ChirpConnect(appKey: CHIRP_APP_KEY, andSecret: CHIRP_APP_SECRET)
+        sdk = ChirpSDK(appKey: CHIRP_APP_KEY, andSecret: CHIRP_APP_SECRET)
         if let sdk = sdk {
             if let error = sdk.setConfig(CHIRP_APP_CONFIG) {
                 print(error.localizedDescription)
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillResignActive(_ application: UIApplication) {
         if let sdk = sdk {
-            if sdk.state != CHIRP_CONNECT_STATE_STOPPED {
+            if sdk.state != CHIRP_SDK_STATE_STOPPED {
                 if let error = sdk.stop() {
                     print(error.localizedDescription)
                 }
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         if let sdk = sdk {
-            if sdk.state != CHIRP_CONNECT_STATE_STOPPED {
+            if sdk.state != CHIRP_SDK_STATE_STOPPED {
                 if let error = sdk.stop() {
                     print(error.localizedDescription)
                 }
@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         if let sdk = sdk {
-            if sdk.state == CHIRP_CONNECT_STATE_STOPPED {
+            if sdk.state == CHIRP_SDK_STATE_STOPPED {
                 if let error = sdk.start() {
                     print(error.localizedDescription)
                 }
@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         if let sdk = sdk {
-            if sdk.state == CHIRP_CONNECT_STATE_STOPPED {
+            if sdk.state == CHIRP_SDK_STATE_STOPPED {
                 if let error = sdk.start() {
                     print(error.localizedDescription)
                 }
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         if let sdk = sdk {
-            if sdk.state != CHIRP_CONNECT_STATE_STOPPED {
+            if sdk.state != CHIRP_SDK_STATE_STOPPED {
                 if let error = sdk.stop() {
                     print(error.localizedDescription)
                 }

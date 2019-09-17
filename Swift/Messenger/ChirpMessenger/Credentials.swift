@@ -4,7 +4,7 @@
  *
  *  For full information on usage and licensing, see https://chirp.io/
  *
- *  Copyright © 2011-2018, Asio Ltd.
+ *  Copyright © 2011-2019, Asio Ltd.
  *  All rights reserved.
  *
  *----------------------------------------------------------------------------*/
