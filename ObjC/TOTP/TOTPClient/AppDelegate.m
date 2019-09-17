@@ -21,10 +21,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    self.connect = [[ChirpConnect alloc] initWithAppKey:CHIRP_APP_KEY andSecret:CHIRP_APP_SECRET];
-    NSError *err = [self.connect setConfig:CHIRP_APP_CONFIG];
+    self.chirp = [[ChirpSDK alloc] initWithAppKey:CHIRP_APP_KEY andSecret:CHIRP_APP_SECRET];
+    NSError *err = [self.chirp setConfig:CHIRP_APP_CONFIG];
     if (!err) {
-        err = [self.connect start];
+        err = [self.chirp start];
         if (err) {
             NSLog(@"ChirpError (%@)", err.description);
         } else {
@@ -39,9 +39,9 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    if (self.connect) {
-        if (self.connect.state != CHIRP_CONNECT_STATE_STOPPED) {
-            NSError *err = [self.connect stop];
+    if (self.chirp) {
+        if (self.chirp.state != CHIRP_SDK_STATE_STOPPED) {
+            NSError *err = [self.chirp stop];
             if (err) {
                 NSLog(@"ChirpError (%@)", err.description);
             }
@@ -51,9 +51,9 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    if (self.connect) {
-        if (self.connect.state != CHIRP_CONNECT_STATE_STOPPED) {
-            NSError *err = [self.connect stop];
+    if (self.chirp) {
+        if (self.chirp.state != CHIRP_SDK_STATE_STOPPED) {
+            NSError *err = [self.chirp stop];
             if (err) {
                 NSLog(@"ChirpError (%@)", err.description);
             }
@@ -63,9 +63,9 @@
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    if (self.connect) {
-        if (self.connect.state == CHIRP_CONNECT_STATE_STOPPED) {
-            NSError *err = [self.connect start];
+    if (self.chirp) {
+        if (self.chirp.state == CHIRP_SDK_STATE_STOPPED) {
+            NSError *err = [self.chirp start];
             if (err) {
                 NSLog(@"ChirpError (%@)", err.description);
             }
@@ -75,9 +75,9 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    if (self.connect) {
-        if (self.connect.state == CHIRP_CONNECT_STATE_STOPPED) {
-            NSError *err = [self.connect start];
+    if (self.chirp) {
+        if (self.chirp.state == CHIRP_SDK_STATE_STOPPED) {
+            NSError *err = [self.chirp start];
             if (err) {
                 NSLog(@"ChirpError (%@)", err.description);
             }
@@ -87,9 +87,9 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    if (self.connect) {
-        if (self.connect.state != CHIRP_CONNECT_STATE_STOPPED) {
-            NSError *err = [self.connect stop];
+    if (self.chirp) {
+        if (self.chirp.state != CHIRP_SDK_STATE_STOPPED) {
+            NSError *err = [self.chirp stop];
             if (err) {
                 NSLog(@"ChirpError (%@)", err.description);
             }

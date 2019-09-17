@@ -10,12 +10,12 @@
  *----------------------------------------------------------------------------*/
 
 #import <UIKit/UIKit.h>
-#import <ChirpConnect/ChirpConnect.h>
+#import <ChirpSDK/ChirpSDK.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) ChirpConnect *connect;
+@property (strong, nonatomic) ChirpSDK *chirp;
 
 @end
 
