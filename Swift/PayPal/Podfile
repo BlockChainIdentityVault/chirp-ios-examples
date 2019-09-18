@@ -6,5 +6,5 @@ target 'PayPal' do
   use_frameworks!
 
   # Pods for PayPal
-  pod 'ChirpSDK', '3.5.2'
+  pod 'ChirpSDK', '3.6.0'
 end

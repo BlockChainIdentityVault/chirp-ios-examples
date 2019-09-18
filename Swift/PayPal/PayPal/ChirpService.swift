@@ -6,7 +6,7 @@
 //  Copyright © 2018 Chirp. All rights reserved.
 //
 
-import ChirpConnect
+import ChirpSDK
 
 protocol ChirpDelegate {
     func onReceived(data: Data?)
@@ -16,10 +16,10 @@ protocol ChirpDelegate {
 
 class ChirpService {
     var delegate: ChirpDelegate?
-    var sdk: ChirpConnect?
+    var sdk: ChirpSDK?
 
     public init() {
-        sdk = ChirpConnect(appKey: CHIRP_APP_KEY, andSecret: CHIRP_APP_SECRET)
+        sdk = ChirpSDK(appKey: CHIRP_APP_KEY, andSecret: CHIRP_APP_SECRET)
         if let sdk = sdk {
             sdk.setConfig(CHIRP_APP_CONFIG)
             sdk.start()

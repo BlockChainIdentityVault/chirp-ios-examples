@@ -11,7 +11,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import <ChirpConnect/ChirpConnect.h>
+#import <ChirpSDK/ChirpSDK.h>
 #import "Classes/TOTPGenerator.h"
 #import "Classes/MF_Base32Additions.h"
 #import "Credentials.h"
@@ -43,8 +43,8 @@
     NSString *chirpPIN = self.PINLabel.text;
     NSData *data = [self encodeMessage:chirpPIN];
 
-    ChirpConnect *connect = ((AppDelegate *)[UIApplication sharedApplication].delegate).connect;
-    [connect send:data];
+    ChirpSDK *chirp = ((AppDelegate *)[UIApplication sharedApplication].delegate).chirp;
+    [chirp send:data];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,10 +90,10 @@
 -(NSData *) encodeMessage:(NSString *)message
 {
     NSString *string = [NSString stringWithUTF8String:message.UTF8String];
-    ChirpConnect *connect = ((AppDelegate *)[UIApplication sharedApplication].delegate).connect;
+    ChirpSDK *chirp = ((AppDelegate *)[UIApplication sharedApplication].delegate).chirp;
 
     NSData *stringData = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [connect isValidPayload:stringData] ? stringData : nil;
+    return [chirp isValidPayload:stringData] ? stringData : nil;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

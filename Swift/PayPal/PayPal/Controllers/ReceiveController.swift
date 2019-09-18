@@ -12,7 +12,7 @@ import UIKit
 /*
  * This view allows the requestor to enter the amount
  * they wish to be paid. The payment is created using
- * PayPal REST API and broadcast using Chirp Connect.
+ * PayPal REST API and broadcast using Chirp SDK.
  */
 class RequestController: UIViewController {
     
@@ -59,9 +59,9 @@ class RequestController: UIViewController {
                         
                         DispatchQueue.main.async(execute: {() -> Void in
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                            if let connect = appDelegate.connect {
+                            if let chirp = appDelegate.chirp {
                                 let payload = StateManager.paymentToken.data(using: .utf8, allowLossyConversion: false)
-                                connect.send(payload: payload!)
+                                chirp.send(payload: payload!)
                             }
                         })
                     }
@@ -86,8 +86,8 @@ class ReceiveController: UIViewController, ChirpDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let connect = appDelegate.connect {
-            connect.delegate = self
+        if let chirp = appDelegate.chirp {
+            chirp.delegate = self
         }
     }
     

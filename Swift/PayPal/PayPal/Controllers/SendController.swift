@@ -20,8 +20,8 @@ class SendingController: UIViewController, ChirpDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let connect = appDelegate.connect {
-            connect.delegate = self
+        if let chirp = appDelegate.chirp {
+            chirp.delegate = self
         }
     }
     
@@ -81,10 +81,10 @@ class SentController: UIViewController, ChirpDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let connect = appDelegate.connect {
-            connect.delegate = self
+        if let chirp = appDelegate.chirp {
+            chirp.delegate = self
             let payload = StateManager.payerId.data(using: .utf8)
-            connect.send(payload: payload!)
+            chirp.send(payload: payload!)
         }
     }
     

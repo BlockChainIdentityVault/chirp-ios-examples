@@ -6,6 +6,6 @@ target 'SecureMessenger' do
   use_frameworks!
 
   # Pods for SecureMessenger
-  pod 'ChirpSDK', '3.5.2'
+  pod 'ChirpSDK', '3.6.0'
   pod 'CryptoSwift'
 end

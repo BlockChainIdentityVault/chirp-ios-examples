@@ -3,11 +3,11 @@
 //  PayPal
 //
 //  Created by Joe Todd on 22/06/2018.
-//  Copyright © 2018 Chirp. All rights reserved.
+//  Copyright © 2019 Chirp. All rights reserved.
 //
 
 import UIKit
-import ChirpConnect
+import ChirpSDK
 
 struct StateManager {
     static var accessToken = ""
@@ -34,7 +34,7 @@ extension URL {
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var connect: ChirpService?
+    var chirp: ChirpService?
     var apiClient: PayPalAPIClient = PayPalAPIClient()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -52,46 +52,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        connect = ChirpService()
+        chirp = ChirpService()
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        if let connect = connect, let sdk = connect.sdk {
-            if sdk.state != CHIRP_CONNECT_STATE_STOPPED {
-                connect.stop()
+        if let chirp = chirp, let sdk = chirp.sdk {
+            if sdk.state != CHIRP_SDK_STATE_STOPPED {
+                chirp.stop()
             }
         }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if let connect = connect, let sdk = connect.sdk {
-            if sdk.state != CHIRP_CONNECT_STATE_STOPPED {
-                connect.stop()
+        if let chirp = chirp, let sdk = chirp.sdk {
+            if sdk.state != CHIRP_SDK_STATE_STOPPED {
+                chirp.stop()
             }
         }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if let connect = connect, let sdk = connect.sdk {
-            if sdk.state == CHIRP_CONNECT_STATE_STOPPED {
-                connect.start()
+        if let chirp = chirp, let sdk = chirp.sdk {
+            if sdk.state == CHIRP_SDK_STATE_STOPPED {
+                chirp.start()
             }
         }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if let connect = connect, let sdk = connect.sdk {
-            if sdk.state == CHIRP_CONNECT_STATE_STOPPED {
-                connect.start()
+        if let chirp = chirp, let sdk = chirp.sdk {
+            if sdk.state == CHIRP_SDK_STATE_STOPPED {
+                chirp.start()
             }
         }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        if let connect = connect, let sdk = connect.sdk {
-            if sdk.state != CHIRP_CONNECT_STATE_STOPPED {
-                connect.stop()
+        if let chirp = chirp, let sdk = chirp.sdk {
+            if sdk.state != CHIRP_SDK_STATE_STOPPED {
+                chirp.stop()
             }
         }
     }

@@ -4,7 +4,7 @@
  *
  *  For full information on usage and licensing, see https://chirp.io/
  *
- *  Copyright © 2011-2018, Asio Ltd.
+ *  Copyright © 2011-2019, Asio Ltd.
  *  All rights reserved.
  *
  *----------------------------------------------------------------------------*/
@@ -38,6 +38,8 @@ class ViewController: UIViewController, UITextViewDelegate {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if let sdk = appDelegate.sdk {
+
+            print(sdk.version);
 
             sdk.sendingBlock = {
                 (data : Data?, channel: UInt?) -> () in
