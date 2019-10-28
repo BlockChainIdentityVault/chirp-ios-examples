@@ -28,6 +28,10 @@ class ViewController: UIViewController, UITextViewDelegate {
             name: UIApplication.willResignActiveNotification,
             object: nil
         )
+        
+        // Minimise keyboard when touching outside
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
 
         // Add padding to textViews
         self.inputText.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
@@ -123,10 +127,13 @@ class ViewController: UIViewController, UITextViewDelegate {
      * Clear the inputText on click.
      */
     func textViewDidBeginEditing(_ textView: UITextView) {
-        self.inputText.text = ""
+        if self.inputText.text == "Enter message..." {
+            self.inputText.text = ""
+        }
     }
 
     @IBAction func send(_ sender: Any) {
+        self.minimiseKeyboard()
         self.sendInput()
     }
 
@@ -151,6 +158,18 @@ class ViewController: UIViewController, UITextViewDelegate {
             }
         }
         return true
+    }
+    
+    /*
+     * Minimise keyboard.
+     */
+    func minimiseKeyboard() {
+        self.inputText.resignFirstResponder()
+        self.view.endEditing(true)
+    }
+    
+    @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        self.minimiseKeyboard()
     }
 
     @IBOutlet var sendButton: UIButton!
